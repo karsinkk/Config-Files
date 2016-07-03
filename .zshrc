@@ -86,7 +86,7 @@ source $ZSH/oh-my-zsh.sh
 
 # User specific aliases and functions
 export PROMPT_COMMAND='if [ "$(id -u)" -ne 0 ]; then echo "$(date "+%Y-%m-%d.%H:%M:%S") $(pwd) $(history 1)" >> ~/.logs/bash-history-$(date "+%Y-%m-%d").log; fi'
-export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.91-0.b14.el7_2.x86_64/jre
+export JAVA_HOME=/usr/java/jdk1.8.0_91
 export HADOOP_HOME=/home/karsinkk/BigData/hadoop
 export SPARK_HOME=/home/karsinkk/BigData/spark
 export HADOOP_PREFIX=/home/karsinkk/BigData/hadoop
@@ -98,3 +98,4 @@ alias start-dfs='$HADOOP_HOME/sbin/start-dfs.sh'
 alias start-yarn='$HADOOP_HOME/sbin/start-yarn.sh'
 alias start-all='$HADOOP_HOME/sbin/start-all.sh'
 alias stop-all='$HADOOP_HOME/sbin/stop-all.sh'
+
