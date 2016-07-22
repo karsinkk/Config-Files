@@ -49,7 +49,7 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(git common-aliases)
 
 # User configuration
 
@@ -86,16 +86,16 @@ source $ZSH/oh-my-zsh.sh
 
 # User specific aliases and functions
 export PROMPT_COMMAND='if [ "$(id -u)" -ne 0 ]; then echo "$(date "+%Y-%m-%d.%H:%M:%S") $(pwd) $(history 1)" >> ~/.logs/bash-history-$(date "+%Y-%m-%d").log; fi'
-export JAVA_HOME=/usr/java/jdk1.8.0_91
+export JAVA_HOME=/opt/java
 export HADOOP_HOME=/home/karsinkk/BigData/hadoop
 export SPARK_HOME=/home/karsinkk/BigData/spark
 export HADOOP_PREFIX=/home/karsinkk/BigData/hadoop
+export GRADLE_HOME=/opt/gradle
 
 export PATH="/home/karsinkk/anaconda3/bin:$PATH"
-export PATH=$PATH:$HADOOP_HOME/bin:$JAVA_HOME/bin:$SPARK_HOME/bin
+export PATH=$PATH:$HADOOP_HOME/bin:$JAVA_HOME/bin:$SPARK_HOME/bin:$GRADLE_HOME/bin
 alias cls='printf "\033c"'
 alias start-dfs='$HADOOP_HOME/sbin/start-dfs.sh'
 alias start-yarn='$HADOOP_HOME/sbin/start-yarn.sh'
 alias start-all='$HADOOP_HOME/sbin/start-all.sh'
 alias stop-all='$HADOOP_HOME/sbin/stop-all.sh'
-
