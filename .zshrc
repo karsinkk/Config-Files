@@ -1,11 +1,13 @@
-# Path to your oh-my-zsh installation.
-export ZSH=$HOME/.oh-my-zsh
+# If you come from bash you might have to change your $PATH.
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
 
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
-ZSH_THEME="robbyrussell"
+# Path to your oh-my-zsh installation.
+export ZSH=/Users/karsinkk/.oh-my-zsh
+
+# Set name of the theme to load. Optionally, if you set this to "random"
+# it'll load a random theme each time that oh-my-zsh is loaded.
+# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
+ZSH_THEME="agnoster"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -49,15 +51,16 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git common-aliases)
-
-# User configuration
-
-# export PATH="/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
-# export MANPATH="/usr/local/man:$MANPATH"
+plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
+eval $(thefuck --alias)
+
+# User configuration
+
+# export MANPATH="/usr/local/man:$MANPATH"
+export PATH="/Users/karsinkk/anaconda3/bin:$PATH"
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
@@ -71,6 +74,13 @@ source $ZSH/oh-my-zsh.sh
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
+GOVERSION=$(brew list go | head -n 1 | cut -d '/' -f 6)
+export GOROOT=$(brew --prefix)/Cellar/go/$GOVERSION/libexec
+export GOPATH=$HOME/src/Go
+
+export PATH=$PATH:$GOPATH/bin
+export PATH=$PATH:$GOROOT/bin
+export PATH=$PATH:$HOME/bin
 # ssh
 # export SSH_KEY_PATH="~/.ssh/dsa_id"
 
@@ -82,20 +92,6 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-
-
-# User specific aliases and functions
-export PROMPT_COMMAND='if [ "$(id -u)" -ne 0 ]; then echo "$(date "+%Y-%m-%d.%H:%M:%S") $(pwd) $(history 1)" >> ~/.logs/bash-history-$(date "+%Y-%m-%d").log; fi'
-export JAVA_HOME=/opt/java
-export HADOOP_HOME=/home/karsinkk/BigData/hadoop
-export SPARK_HOME=/home/karsinkk/BigData/spark
-export HADOOP_PREFIX=/home/karsinkk/BigData/hadoop
-export GRADLE_HOME=/opt/gradle
-
-export PATH="/home/karsinkk/anaconda3/bin:$PATH"
-export PATH=$PATH:$HADOOP_HOME/bin:$JAVA_HOME/bin:$SPARK_HOME/bin:$GRADLE_HOME/bin
+alias proj='cd /Users/karsinkk/src/Go/src/github.com/karsinkk/'
 alias cls='printf "\033c"'
-alias start-dfs='$HADOOP_HOME/sbin/start-dfs.sh'
-alias start-yarn='$HADOOP_HOME/sbin/start-yarn.sh'
-alias start-all='$HADOOP_HOME/sbin/start-all.sh'
-alias stop-all='$HADOOP_HOME/sbin/stop-all.sh'
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
