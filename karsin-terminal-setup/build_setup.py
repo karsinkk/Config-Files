@@ -271,7 +271,10 @@ clone_pin() {  # url dir commit
     say "plugin $2 already cloned"
     return 0
   fi
-  git clone --quiet "$url" "$dir"
+  if ! git clone --quiet "$url" "$dir"; then
+    warn "clone of $2 failed; theme unavailable (default dracula-local unaffected)"
+    return 0
+  fi
   git -C "$dir" checkout --quiet "$commit" 2>/dev/null \\
     || warn "could not pin $2 to $commit; using default branch"
   say "cloned $2 @ ${commit:0:7}"
@@ -280,7 +283,8 @@ clone_pin() {  # url dir commit
 mkdir -p "$HOME/.config/tmux/plugins"
 if [ ! -d "$HOME/.config/tmux/plugins/tpm/.git" ]; then
   git clone --quiet https://github.com/tmux-plugins/tpm \\
-    "$HOME/.config/tmux/plugins/tpm"
+    "$HOME/.config/tmux/plugins/tpm" \\
+    || warn "tpm clone failed; plugins must be installed manually later"
   say "cloned tpm"
 fi
 """)

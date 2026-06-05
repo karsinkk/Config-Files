@@ -2484,7 +2484,7 @@ cat > "$HOME/Library/Application Support/iTerm2/DynamicProfiles/karsin-shared.js
         "Green Component": 0.06274509803921569,
         "Red Component": 0.06274509803921569
       },
-      "Guid": "70B032D8-0D9E-412E-8404-29AAD9591BE0",
+      "Guid": "9E2AE75F-398F-40F3-9513-8690405350A1",
       "Horizontal Spacing": 1.0,
       "Link Color": {
         "Alpha Component": 1.0,
@@ -2643,7 +2643,10 @@ clone_pin() {  # url dir commit
     say "plugin $2 already cloned"
     return 0
   fi
-  git clone --quiet "$url" "$dir"
+  if ! git clone --quiet "$url" "$dir"; then
+    warn "clone of $2 failed; theme unavailable (default dracula-local unaffected)"
+    return 0
+  fi
   git -C "$dir" checkout --quiet "$commit" 2>/dev/null \
     || warn "could not pin $2 to $commit; using default branch"
   say "cloned $2 @ ${commit:0:7}"
@@ -2652,7 +2655,8 @@ clone_pin() {  # url dir commit
 mkdir -p "$HOME/.config/tmux/plugins"
 if [ ! -d "$HOME/.config/tmux/plugins/tpm/.git" ]; then
   git clone --quiet https://github.com/tmux-plugins/tpm \
-    "$HOME/.config/tmux/plugins/tpm"
+    "$HOME/.config/tmux/plugins/tpm" \
+    || warn "tpm clone failed; plugins must be installed manually later"
   say "cloned tpm"
 fi
 clone_pin "https://github.com/catppuccin/tmux.git" "catppuccin" "d2d25bd3393fe43f19eb4fff6cdd2bdf5578e622"
