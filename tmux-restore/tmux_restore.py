@@ -617,6 +617,12 @@ def restore_pane_command(p: dict) -> str | None:
     """
     claude_sid = p.get("claude_session_id")
     claude_path = p.get("claude_session_path")
+    # Snapshot-integrity guard: the SID is typed into a live shell via
+    # send-keys, so never interpolate a value that isn't a bare UUID, even
+    # though capture only ever writes regex-matched UUIDs.
+    if claude_sid and not UUID_RE.fullmatch(claude_sid):
+        log(f"claude session id {claude_sid!r} fails UUID check; launching plain claude")
+        return "claude"
     if claude_sid:
         if claude_path and not Path(claude_path).exists():
             log(f"claude session {claude_sid} JSONL missing; launching plain claude")
@@ -633,6 +639,9 @@ def restore_pane_command(p: dict) -> str | None:
         return "claude"
     codex_sid = p.get("codex_session_id")
     codex_path = p.get("codex_session_path")
+    if codex_sid and not UUID_RE.fullmatch(codex_sid):
+        log(f"codex session id {codex_sid!r} fails UUID check; launching plain codex")
+        return "codex"
     if codex_sid:
         if codex_path and not Path(codex_path).exists():
             log(f"codex session {codex_sid} rollout missing; launching plain codex")
